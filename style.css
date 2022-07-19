@@ -37,6 +37,8 @@ ol, ul {
     height: 100vh;
     width: 100vw;
     --grey: #e5e5e5;
+    --red: #ff7070;
+    --green: #70ff70;
     font-size: 40px;
 }
 
@@ -55,6 +57,7 @@ header {
     padding: 30px;
     color: black;
     font-size: .4rem;
+    border-right: 1px solid black;
 }
 
 header > * {
@@ -93,8 +96,41 @@ button {
     border: 3px solid var(--grey);
     border-radius: 20px;
     font-size: .4rem;
+    border: 1px solid black;
 }
 
 main {
     background-color: var(--grey);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    gap: 50px;
+    padding: 50px;
+    overflow: auto;
+}
+
+.book {
+    height: 300px;
+    width: 275px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 20px;
+    border-radius: 10%;
+    font-size: .65rem;
+}
+
+.main-button {
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+#read-status, #add-book {
+    background-color: var(--green);
+}
+
+#remove {
+    background-color: var(--red);
 }
