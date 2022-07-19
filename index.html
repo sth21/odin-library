@@ -12,6 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="overlay" class="input-inactive">
+        <form>
+            <p>Add Book</p>
+            <input type="text" id="title" placeholder="Title" name="title">
+            <input type="text" id="author" placeholder="Author" name="author">
+            <input type="text" id="pages" type="number" placeholder="Pages" name="pages">
+            <div class="read-form">
+                <label for="is-read">Is this book read?</label>
+                <input id="is-read" type="checkbox" name="isRead">
+            </div>
+            <button>Submit</button>
+        </form>
+    </div>
     <header>
         <h1>Library</h1>
         <div class="features">
