@@ -1,3 +1,4 @@
+// Global Var
 let myLibrary = [];
 let addBook = document.querySelector('#add-book');
 let overlay = document.querySelector('#overlay');
@@ -5,14 +6,14 @@ let main = document.querySelector('main');
 let readbtns;
 let removebtns;
 
-function Book(title, author, pages, isRead) {
+function Book(title, author, pages, isRead) { // Book object constructor
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.isRead = isRead;
 }
 
-function addBookToLibrary () {
+function addBookToLibrary () { // Creates book in DOM
     let length = myLibrary.length - 1;
     let div = document.createElement('div');
     div.classList.add('book');
@@ -39,9 +40,10 @@ function addBookToLibrary () {
     main.appendChild(div);
     readButtonEvent(document.querySelectorAll('#read-status')); // Adds Event Listener to all read buttons
     removeButtonEvent(document.querySelectorAll('#remove')); // Adds Event Listener to all remove buttons
+    keepStats(); // Updates sidebar statistics for new book addition
 }
 
-addBook.addEventListener('click', () => {
+addBook.addEventListener('click', () => { // Adds book on click
     overlay.classList.remove("input-inactive");
     overlay.classList.add("input-active");
     document.querySelector('#title').value = "";
@@ -50,7 +52,7 @@ addBook.addEventListener('click', () => {
     document.querySelector('#is-read').checked = false;
 });
 
-document.addEventListener('submit', (e) => {
+document.addEventListener('submit', (e) => { // Stores book in library and DOM on click
     e.preventDefault();
     let title = document.querySelector('#title').value;
     let author = document.querySelector('#author').value;
@@ -62,23 +64,42 @@ document.addEventListener('submit', (e) => {
     overlay.classList.add("input-inactive");
 });
 
-function readButtonEvent(buttons) {
+function readButtonEvent(buttons) { // Toggles isRead on book on click
     buttons.forEach((button, index) => {
         button.addEventListener('click', (event) => {
             (myLibrary[index].isRead) ? button.style.backgroundColor = '#ff7070' : button.style.backgroundColor = '#70ff70';
             (myLibrary[index].isRead) ? button.textContent = 'Not Read' : button.textContent = 'Read';
             (myLibrary[index].isRead) ? myLibrary[index].isRead = false : myLibrary[index].isRead = true;
+            keepStats(); // Update sidebar statistics for change in book settings
         });
     });
 }
 
-function removeButtonEvent(buttons) {
+function removeButtonEvent(buttons) { // Removes book in Library and DOM on click
     buttons.forEach((button, index) => {
         button.addEventListener('click', (event) => {
-            let removed = document.querySelector(`main:nth-child(${index})`);
-            console.log(removed);
             myLibrary.splice(index - 1, 1);
-            main.removeChild(removed);
+            main.removeChild(event.target.parentNode);
+            keepStats(); // Update sidebar statistics for new book removal
+            removeButtonEvent(document.querySelectorAll('#remove')); // Requery event listeners on updated nodelist
+            readButtonEvent(document.querySelectorAll('#read-status')); // Requery event listener on updated nodelist
         });
     });
+}
+
+function keepStats() {
+    let books = myLibrary.length;
+    let completedBooks = 0;
+    let percentUnread;
+    let totalPages = 0;
+    for (let i = 0; i < myLibrary.length; ++i) {
+        (myLibrary[i].isRead) ? ++completedBooks : completedBooks += 0;
+        totalPages += parseInt(myLibrary[i].pages);
+    }
+    percentUnread = ((books - completedBooks) / books).toFixed(2) * 100;
+    (isNaN(percentUnread)) ? percentUnread = 0 : percentUnread;
+    document.querySelector('.book-stat').textContent = `Books: ${books}`;
+    document.querySelector('.completed-book-stat').textContent = `Completed Books: ${completedBooks}`;
+    document.querySelector('.percent-unread-stat').textContent =  `Percent Unread: ${percentUnread}%`;
+    document.querySelector('.total-pages-stat').textContent = `Total Pages: ${totalPages}`;
 }
