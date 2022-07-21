@@ -15,14 +15,14 @@
     <div id="overlay" class="input-inactive">
         <form>
             <p>Add Book</p>
-            <input type="text" id="title" placeholder="Title" name="title">
-            <input type="text" id="author" placeholder="Author" name="author">
-            <input type="text" id="pages" type="number" placeholder="Pages" name="pages">
+            <input type="text" id="title" placeholder="Title" name="title" required>
+            <input type="text" id="author" placeholder="Author" name="author" required>
+            <input type="number" id="pages" placeholder="Pages" name="pages" required min="2" max="10000">
             <div class="read-form">
                 <label for="is-read">Is this book read?</label>
                 <input id="is-read" type="checkbox" name="isRead">
             </div>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
     <header>
@@ -41,55 +41,7 @@
         </div>
     </header>
     <main>
-        <div class="book">
-            <p>"Title"</p>
-            <p>Author</p>
-            <p>Pages</p>
-            <button class="main-button" id="read-status">Read</button>
-            <button class="main-button" id="remove">Remove</button>
-        </div>
-        <div class="book">
-            <p>"Title"</p>
-            <p>Author</p>
-            <p>Pages</p>
-            <button class="main-button" id="read-status">Read</button>
-            <button class="main-button" id="remove">Remove</button>
-        </div>
-        <div class="book">
-            <p>"Title"</p>
-            <p>Author</p>
-            <p>Pages</p>
-            <button class="main-button" id="read-status">Read</button>
-            <button class="main-button" id="remove">Remove</button>
-        </div>
-        <div class="book">
-            <p>"Title"</p>
-            <p>Author</p>
-            <p>Pages</p>
-            <button class="main-button" id="read-status">Read</button>
-            <button class="main-button" id="remove">Remove</button>
-        </div>
-        <div class="book">
-            <p>"Title"</p>
-            <p>Author</p>
-            <p>Pages</p>
-            <button class="main-button" id="read-status">Read</button>
-            <button class="main-button" id="remove">Remove</button>
-        </div>
-        <div class="book">
-            <p>"Title"</p>
-            <p>Author</p>
-            <p>Pages</p>
-            <button class="main-button" id="read-status">Read</button>
-            <button class="main-button" id="remove">Remove</button>
-        </div>
-        <div class="book">
-            <p>"Title"</p>
-            <p>Author</p>
-            <p>Pages</p>
-            <button class="main-button" id="read-status">Read</button>
-            <button class="main-button" id="remove">Remove</button>
-        </div>
+
     </main>
 </body>
 </html>

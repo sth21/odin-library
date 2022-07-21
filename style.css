@@ -174,7 +174,7 @@ form {
     display: none;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
     width: 80%;
     height: 30px;
     font-size: .5rem;
@@ -183,6 +183,12 @@ input[type="text"] {
 
 label[for="is-read"] {
     font-size: .5rem;
+}
+
+.read-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 input {
