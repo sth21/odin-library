@@ -3,8 +3,8 @@ let myLibrary = [];
 let addBook = document.querySelector('#add-book');
 let overlay = document.querySelector('#overlay');
 let main = document.querySelector('main');
-let readbtns;
-let removebtns;
+let counter = 0;
+let f;
 
 function Book(title, author, pages, isRead) { // Book object constructor
     this.title = title;
@@ -17,6 +17,7 @@ function addBookToLibrary () { // Creates book in DOM
     let length = myLibrary.length - 1;
     let div = document.createElement('div');
     div.classList.add('book');
+    div.classList.add(`number${counter}`);
     let title = document.createElement('p');
     title.textContent = myLibrary[length].title;
     div.appendChild(title);
@@ -38,8 +39,9 @@ function addBookToLibrary () { // Creates book in DOM
     remove.textContent = 'Remove';
     div.appendChild(remove);
     main.appendChild(div);
-    readButtonEvent(readStatus, length); // Adds Event Listener to read toggle button
-    removeButtonEvent(remove, length); // Adds Event Listener to remove button
+    readButtonEvent(readStatus); // Adds Event Listener to read toggle button
+    ++counter;
+    removeButtonEvent(remove); // Adds Event Listener to remove button
     keepStats(); // Updates sidebar statistics for new book addition
 }
 
@@ -64,19 +66,37 @@ document.addEventListener('submit', (e) => { // Stores book in library and DOM o
     overlay.classList.add("input-inactive");
 });
 
-function readButtonEvent(button, index) { // Toggles isRead on book on click
-    button.addEventListener('click', (event) => {
-        (myLibrary[index].isRead) ? button.style.backgroundColor = '#ff7070' : button.style.backgroundColor = '#70ff70';
-        (myLibrary[index].isRead) ? button.textContent = 'Not Read' : button.textContent = 'Read';
-        (myLibrary[index].isRead) ? myLibrary[index].isRead = false : myLibrary[index].isRead = true;
+function readButtonEvent(button) { // Toggles isRead on book on click
+    button.addEventListener('click', f = (event) => {
+        let bookClass;
+        for (let i = 0; i < myLibrary.length; ++i) {
+            (event.target.parentNode.classList.contains(`number${i}`)) ? bookClass = i : bookClass = bookClass;
+        }
+        (myLibrary[bookClass].isRead) ? button.style.backgroundColor = '#ff7070' : button.style.backgroundColor = '#70ff70';
+        (myLibrary[bookClass].isRead) ? button.textContent = 'Not Read' : button.textContent = 'Read';
+        (myLibrary[bookClass].isRead) ? myLibrary[bookClass].isRead = false : myLibrary[bookClass].isRead = true;
         keepStats(); // Update sidebar statistics for change in book settings
     });
 }
 
-function removeButtonEvent(button, index) { // Removes book in Library and DOM on click
+function removeButtonEvent(button) { // Removes book in Library and DOM on click
     button.addEventListener('click', (event) => {
-        myLibrary.splice(index - 1, 1);
+        let index = myLibrary.length - 1;
+        let bookClass;
+        for (let i = 0; i < myLibrary.length; ++i) {
+            (event.target.parentNode.classList.contains(`number${i}`)) ? bookClass = i : bookClass = bookClass;
+        }
+        myLibrary.splice(bookClass, 1);
         main.removeChild(event.target.parentNode);
+        for (let j = 0; j < index - bookClass; ++j) {
+            let classNumb = bookClass + j + 1;
+            let remove = document.querySelector(`.number${classNumb}`);
+            let removeButton = remove.childNodes[3];
+            remove.classList.remove(`number${classNumb}`);
+            classNumb -= 1;
+            remove.classList.add(`number${classNumb}`);
+        }
+        --counter;
         keepStats(); // Update sidebar statistics for new book removal
     });
 }
