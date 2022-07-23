@@ -100,6 +100,10 @@ button {
     border: 1px solid black;
 }
 
+button:hover {
+    filter: brightness(85%);
+}
+
 main {
     background-color: var(--grey);
     display: grid;
@@ -110,22 +114,29 @@ main {
 }
 
 .book {
-    height: 300px;
-    width: 275px;
+    height: 360px;
+    width: 260px;
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 25px;
-    padding: 20px;
+    word-wrap: break-word;
+    gap: 30px;
+    padding: 30px;
     border-radius: 10%;
-    font-size: .65rem;
+    font-size: .6rem;
+    overflow-x: scroll;
+    text-align: center;
 }
 
 .main-button {
     width: 100%;
     letter-spacing: 1px;
+}
+
+#read-status {
+    margin-top: auto;
 }
 
 #read-status, #add-book, form button {
