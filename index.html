@@ -13,11 +13,20 @@
 </head>
 <body>
     <div id="overlay" class="input-inactive">
-        <form>
+        <form novalidate>
             <p>Add Book</p>
-            <input type="text" id="title" placeholder="Title" name="title" required>
-            <input type="text" id="author" placeholder="Author" name="author" required>
-            <input type="number" id="pages" placeholder="Pages" name="pages" required min="2" max="10000">
+            <div class="section">
+                <input type="text" id="title" placeholder="Title" name="title" required>
+                <span class="error" aria-live="polite"></span>
+            </div>
+            <div class="section">
+                <input type="text" id="author" placeholder="Author" name="author" required>
+                <span class="error" aria-live="polite"></span>
+            </div>
+            <div class=section>
+                <input type="number" id="pages" placeholder="Pages" name="pages" required min="2" max="10000">
+                <span class="error" aria-live="polite"></span>
+            </div>
             <div class="read-form">
                 <label for="is-read">Is this book read?</label>
                 <input id="is-read" type="checkbox" name="isRead">

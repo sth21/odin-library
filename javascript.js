@@ -99,6 +99,13 @@ let addBook = document.querySelector('#add-book');
 let overlay = document.querySelector('#overlay');
 
 document.addEventListener('submit', (e) => { // Stores book in library and DOM on click
+    if (verifyForm.verifyInputs() === false) {
+        verifyForm.verifyTitle();
+        verifyForm.verifyAuthor();
+        verifyForm.verifyPages();
+        e.preventDefault();
+        return;
+    }
     e.preventDefault();
     let title = document.querySelector('#title').value;
     let author = document.querySelector('#author').value;
@@ -118,3 +125,60 @@ addBook.addEventListener('click', () => { // Adds book on click
     document.querySelector('#pages').value = "";
     document.querySelector('#is-read').checked = false;
 });
+
+const verifyForm = (() => {
+    const form = document.querySelector('form');
+    const title = document.getElementById('title');
+    const titleError = document.querySelector('#title + span.error');
+    const author = document.getElementById('author');
+    const authorError = document.querySelector('#author + span.error');
+    const pages = document.getElementById('pages');
+    const pagesError = document.querySelector('#pages + span.error');
+
+    const verifyTitle = () => {
+        if (title.validity.valid) {
+            titleError.textContent = '';
+            titleError.className = 'error';
+        } else {
+            showError(title, titleError);
+        }
+    };
+    const verifyAuthor = () => {
+        if (author.validity.valid) {
+            authorError.textContent = '';
+            authorError.className = 'error';
+        } else {
+            showError(author, authorError);
+        }
+    };
+    const verifyPages = () => {
+        if (pages.validity.valid) {
+            pagesError.textContent = '';
+            pagesError.className = 'error';
+        } else {
+            showError(pages, pagesError);
+        }
+    };
+    const verifyInputs = () => {
+        if (!title.validity.valid || !author.validity.valid || !pages.validity.valid) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+    const showError = (input, inputError) => {
+        if (input.validity.valueMissing) {
+            inputError.textContent = 'Please fill out required field';
+        } else {
+            if (input.validity.rangeUnderflow) {
+                inputError.textContent = 'Page length must be at least 2';
+            } else {
+                inputError.textContent = 'Page length cannot exceed 10000';
+            }
+        }
+    };
+    title.addEventListener('input', verifyTitle);
+    author.addEventListener('input', verifyAuthor);
+    pages.addEventListener('input', verifyPages);
+    return { verifyInputs, verifyAuthor, verifyPages, verifyTitle };
+})();
